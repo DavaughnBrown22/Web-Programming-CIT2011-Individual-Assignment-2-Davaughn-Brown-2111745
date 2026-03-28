@@ -1,0 +1,66 @@
+<!-- Name: Davaughn Brown -->
+<!-- ID number: 2111745 -->
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name = "viewport" content = "width=device-width,inital-scale=1" />
+    <title> Login Page </title>
+    <link rel = "stylesheet" href="../Style.css/style.css ">
+</head>
+<body>
+    <main class = "form-container">
+        <form id = "loginform" class = "pageform">
+            <link rel = "stylesheet" href = "..Style.css/style.css">
+            <h2>Hey!!!! Welcome Back</h2>
+
+            <div class = "page-group">
+                <label for= 'username'> Username</label>
+                <input type = "text" id = "username" name = 'username' required>
+                <span class = "error-message" id = "ErrorUsername"></span>
+            </div>
+
+            <div class = "page-group">
+                <label for= 'password'> Password</label>
+                <input type = "password" id = "password" name = 'password' required>
+                <span class = "error-message" id = "ErrorPassword"></span>
+            </div>
+
+            <button type = "submit" id = "loginBtn"> Login </button>
+            <p> Are you a New user?<a href = "Regristration.html">Register here</a></p>
+        </form>
+    </main>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const loginform = document.getElementById('loginform');
+
+    loginform.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        let isValid = true;
+
+        if (username ===""){
+            document.getElementById('ErrorUsername').innerText = "Username is Required";
+            isValid = false;  
+        } else {
+            document.getElementById('ErrorUsername').innerText = ""; 
+        }
+
+        if (password.length <8){
+            document.getElementById('ErrorPassword'). innerText = "Password must be atleast 8 characters ";
+            isValid = false;
+        } else {
+            document.getElementById('ErrorPassword').innerText = "";
+        }
+
+        if (isValid) {
+            alert("Login Successful! Redirecting...")
+            window.location.href = "index.html";
+        }
+    })
+
+});
+</script>

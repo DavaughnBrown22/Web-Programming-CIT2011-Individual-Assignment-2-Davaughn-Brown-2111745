@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout Page </title>
+    <link rel="stylesheet" href="../Style.css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navigationbar">
+            <ul class="navigation-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Cart.html">Cart</a></li>
+                <li><a href="Checkout.html" class="active">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="title">Checkout Summary</h1>
+
+        <section class="Summary-Cart">
+            <h3>Your Order</h3>
+            <div id="checkoutItems">
+                </div>
+            <p><strong>Total Amount to Pay: </strong> <span id="checkoutTotal">$0.00</span></p>
+        </section>
+
+        <hr>
+
+        <section class="checkout-form">
+            <h3>Shipping & Payment Details</h3>
+            <form id="paymentForm">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required>
+
+                <label for="Address">Address:</label>
+                <textarea id="address" placeholder="Enter your Address" required></textarea>
+
+                <label for="amountPaid">Amount Being Paid ($):</label>
+                <input type="number" id="amountPaid" step="0.01" placeholder="0.00" required>
+
+                <div class="form-buttons">
+                    <button type="button" onclick="confirmOrder()">Confirm</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="Summary-Cart">
+            <button onclick="clearCart()">Clear All</button>
+            <button onclick="processCheckout()">Check Out</button>
+            <button onclick="window.location.href='index.html'">Close</button>
+        </div>
+    </main>
+</body>
+</html>
+<script>
+    function SummaryOrderdisplay(){
+        let cart = JSON.parse(localStorage.getItem('gf_cart')) || [];
+        let Summary = document.getElementById('checkoutItems');
+        let totalDisplay = document.getElementById('checkoutTotal');
+        let total = 0;
+
+                 
+        Summary.innerHTML = "";
+
+        if(cart.length ===0){
+            Summary.innerHTML = "<p>Your cart is empty. Please add item before checking out.</P>";
+        } else {
+            for(let i = 0; i <cart.length; i++){
+                let itemName = cart [i].name;
+                let itemPrice = parseFloat(cart[i].price);
+                let tax = itemPrice * 0.15;
+                let discount = itemPrice * 0.10
+                let subtotal = (itemPrice + tax) - discount;
+
+                let itemDetail = `
+                    <div class = "Summary-row" style = "margin-bottom: 15px; padding-bottom: 10px; border: 1px solid #555;">
+                        <div style = "display: flex; justify-content: space-between;">
+                            <strong>${itemName}</strong>
+                            <strong>$${subtotal.toFixed(2)}</strong>
+                        </div>
+                        <div style = "font-size: 0.9rem; color: #bbb; margin-top: 5px;">
+                            Price: $${itemPrice.toFixed(2)} | Quantity: 1 | Tax(15%): $${tax.toFixed(2)} | Disco
+                            unt (10%) -$${discount.toFixed(2)}}
+                        </div>
+                    </div>
+                `;
+
+                Summary.innerHTML += itemDetail;
+                total += subtotal
+            }
+        }
+
+    totalDisplay.innerHTML  = '$' + total.toFixed(2);
+}
+    
+    function confirmOrder() {
+        let name  = document.getElementById('fullName').value;
+        let amount  = document.getElementById('amountpaid').value;
+        let address = document.getElementById('address').value;
+        let finalTotal = document.getElementById('checkoutTotal').innerText.replace('$','');
+
+       if (parseFloat (amountpaid).toFixed(2) !==(finalTotal).toFixed(2)){
+            alert("The amount entered does not match the total.")
+            return;
+       }
+       
+        alert("Thank you," + name + " ! Your order has been confirmed");
+
+        localStorage.removeItem('gf_cart');
+        window.location.href = 'index.html';
+    }
+
+    window.onload = SummaryOrderdisplay;
+</script>

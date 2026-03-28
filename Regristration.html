@@ -1,0 +1,82 @@
+<!-- Name: Davaughn Brown -->
+<!-- ID number: 2111745 -->
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name = "viewport" content = "width=device-width,inital-scale=1" />
+    <title> registration page</title>
+    <link rel = "stylesheet" href="../Style.css/style.css ">
+</head>
+<body>
+    <main class = "form-container">
+        <form id = "registrationForm" class = "pageform">
+            <link rel = "stylesheet" href = "..Style.css/style.css">
+            <h2>Register an Account</h2>
+
+            <div class = "page-group">
+                <label for= 'FullName'> Full Name</label>
+                <input type = "text" id = "FullName" placeholder="Please enter your full name" required>
+                <span class = "error-message" id = "RegErrorFullName"></span>
+            </div>
+
+            <div class = "page-group">
+                <label for= 'DOB'> Date of Birth</label>
+                <input type = "date" id = "DOB" required>
+            </div>
+
+            <div class = "page-group">
+                <label for= 'Email'> Email </label>
+                <input type = "text" id = "Email" placeholder="example@gmail.com" required>
+                <span class = "error-message" id = "RegErrorEmail"></span>
+            </div>
+
+             <div class = "page-group">
+                <label for= 'username'> Username</label>
+                <input type = "text" id = "registrationusername" required>
+                <span class = "error-message" id = "RegErrorUsername"></span>
+            </div>
+
+            <div class = "page-group">
+                <label for= 'password'> Password</label>
+                <input type = "password" id = "registrationpassword"required>
+                <span class = "error-message" id = "RegErrorPassword"></span>
+            </div>
+
+            <button type = "submit" id = "Regristrationbtn"> Register </button>
+            <p> You already have an account?<a href = "Login.html">Login here</a></p>
+        </form>
+    </main>
+</body>
+<script>
+    let registrationForm = document.getElementById('registrationForm');
+if(registrationForm){
+    registrationForm.addEventListener('submit', function(z) {
+        z.preventDefault();
+
+        let email = document.getElementById('Email').value.trim();
+        let fullName = document.getElementById('FullName').value.trim();
+        let username = document.getElementById('registrationusername').value.trim();
+        let password = document.getElementById('registrationpassword').value.trim();
+        let isValid = true;
+
+        if (!email.includes('@')) {
+            document.getElementById('RegErrorEmail').innerText = "Please enter a valid email";
+            isValid = false;
+        } else {
+            document.getElementById('RegErrorEmail').innerText = "";
+        }
+
+        if (password.length <8){
+            document.getElementById('RegErrorPassword'). innerText = "Password must be atleast 8 characters ";
+            isValid = false;
+        } else {
+            document.getElementById('RegErrorPassword').innerText = "";
+        }
+
+        if (isValid) {
+            alert("Registration succesfull! Redirecting...")
+            window.location.href = "Login.html";
+        }
+ })}
+</script>
